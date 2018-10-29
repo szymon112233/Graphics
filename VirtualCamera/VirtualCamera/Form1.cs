@@ -209,43 +209,6 @@ namespace VirtualCamera
             Draw();
         }
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            /*Matrix4x4 temp = new Matrix4x4(
-            1.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, (float)Math.Cos(1.0f), -(float)Math.Sin(1.0f), 0.0f,
-            0.0f, (float)Math.Sin(1.0f), (float)Math.Cos(1.0f), 0.0f,
-            0.0f, 0.0f, 0.0f, 1.0f);*/
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitX, 0.17f));
-            cameraToWorld *= temp;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
-        }
-
-        private void button9_Click(object sender, EventArgs e)
-        {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitX, 0.17f));
-            cameraToWorld *= temp;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitY, 0.17f));
-            cameraToWorld *= temp;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitY, 0.17f));
-            cameraToWorld *= temp;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
-        }
-
         private void button13_Click(object sender, EventArgs e)
         {
             Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitZ, 0.17f));
