@@ -43,11 +43,79 @@ namespace VirtualCamera
 
             clipPlanePosition.Z += 100;
 
-            //button1.KeyDown += new KeyEventHandler(OnButtonKeyDown);
-            button1.PreviewKeyDown += new PreviewKeyDownEventHandler(OnButtonKeyDown);
+            //button1.PreviewKeyDown += new PreviewKeyDownEventHandler(OnButtonKeyDown);
             pictureBox1.MouseMove += new MouseEventHandler(OnMouseMove);
             pictureBox1.MouseDown += PictureBox1_MouseDown;
             pictureBox1.MouseUp += PictureBox1_MouseUp;
+        }
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if (keyData == Keys.W)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M31, cameraToWorld.M32, cameraToWorld.M33) * -5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+            else if (keyData == Keys.S)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M31, cameraToWorld.M32, cameraToWorld.M33) * 5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+
+            if (keyData == Keys.A)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M11, cameraToWorld.M12, cameraToWorld.M13) * -5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+            else if (keyData == Keys.D)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M11, cameraToWorld.M12, cameraToWorld.M13) * 5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+            else if (keyData == Keys.Z)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * -5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+            else if (keyData == Keys.X)
+            {
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * 5);
+                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
+                Draw();
+            }
+
+            if (keyData == Keys.Q)
+            {
+                Rotate(-Vector3.UnitZ, 2.0f);
+            }
+            else if (keyData == Keys.E)
+            {
+                Rotate(Vector3.UnitZ, 2.0f);
+            }
+            else if (keyData == Keys.NumPad4)
+            {
+                Rotate(Vector3.UnitY, 10.0f);
+            }
+            else if (keyData == Keys.NumPad6)
+            {
+                Rotate(-Vector3.UnitY, 10.0f);
+            }
+            else if (keyData == Keys.NumPad8)
+            {
+                Rotate(Vector3.UnitX, 2.0f);
+            }
+            else if (keyData == Keys.NumPad2)
+            {
+                Rotate(-Vector3.UnitX, 2.0f);
+            }
+
+            // Call the base class
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         private void PictureBox1_MouseUp(object sender, MouseEventArgs e)
@@ -77,8 +145,6 @@ namespace VirtualCamera
             scene[2].rightTop = new Vector3(520.0f, 100.0f, 45.0f);
         }
 
-        
-
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -88,7 +154,6 @@ namespace VirtualCamera
         {
 
         }
-
 
         void Draw()
         {
@@ -362,95 +427,7 @@ namespace VirtualCamera
             Draw();
         }
 
-
-        private void OnButtonKeyDown(object sender, KeyEventArgs e)
-        {
-
-            if (e.KeyCode == Keys.W)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(0, 0, 10));
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(0, 0, -10));
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-
-        }
-
-        private void OnButtonKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
-            if (e.KeyCode == Keys.W)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M31, cameraToWorld.M32, cameraToWorld.M33) * -5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M31, cameraToWorld.M32, cameraToWorld.M33) * 5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-
-            if (e.KeyCode == Keys.A)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation( new Vector3(cameraToWorld.M11, cameraToWorld.M12, cameraToWorld.M13) * -5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-            else if (e.KeyCode == Keys.D)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M11, cameraToWorld.M12, cameraToWorld.M13) * 5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-            else if (e.KeyCode == Keys.Z)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * -5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-            else if (e.KeyCode == Keys.X)
-            {
-                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * 5);
-                bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-                Draw();
-            }
-
-            if (e.KeyCode == Keys.Q)
-            {
-                Rotate(-Vector3.UnitZ, 2.0f);
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                Rotate(Vector3.UnitZ, 2.0f);
-            }
-            else if (e.KeyCode == Keys.NumPad4)
-            {
-                Rotate(Vector3.UnitY, 10.0f);
-            }
-            else if (e.KeyCode == Keys.NumPad6)
-            {
-                Rotate(-Vector3.UnitY, 10.0f);
-            }
-            else if (e.KeyCode == Keys.NumPad8)
-            {
-                Rotate(Vector3.UnitX, 2.0f);
-            }
-            else if (e.KeyCode == Keys.NumPad2)
-            {
-                Rotate(-Vector3.UnitX, 2.0f);
-            }
-
-        }
-
         bool first = false;
-
 
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
@@ -484,8 +461,6 @@ namespace VirtualCamera
             else
                 first = false;
         }
-
-
 
         private void label5_Click(object sender, EventArgs e)
         {
