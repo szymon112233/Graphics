@@ -49,6 +49,7 @@
             this.button11 = new System.Windows.Forms.Button();
             this.button14 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
@@ -164,19 +165,19 @@
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(833, 367);
-            this.trackBar1.Maximum = 180;
+            this.trackBar1.Location = new System.Drawing.Point(833, 411);
+            this.trackBar1.Maximum = 200;
             this.trackBar1.Minimum = 1;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(156, 45);
             this.trackBar1.TabIndex = 13;
-            this.trackBar1.Value = 1;
+            this.trackBar1.Value = 100;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(830, 351);
+            this.label4.Location = new System.Drawing.Point(830, 395);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(34, 13);
             this.label4.TabIndex = 14;
@@ -247,7 +248,7 @@
             // 
             this.button14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button14.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button14.Location = new System.Drawing.Point(833, 418);
+            this.button14.Location = new System.Drawing.Point(833, 462);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(277, 71);
             this.button14.TabIndex = 23;
@@ -265,11 +266,22 @@
             this.label5.Text = "Camera Position";
             this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(830, 321);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 13);
+            this.label6.TabIndex = 25;
+            this.label6.Text = "Camera Position";
+            this.label6.Click += new System.EventHandler(this.label6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1122, 663);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button11);
@@ -323,6 +335,7 @@
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label6;
     }
 }
 

@@ -26,7 +26,7 @@ namespace VirtualCamera
             1.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f,
             0.0f, 0.0f, -1.0f, 0.0f,
-            180.0f, 190.0f, -10.0f, 1.0f);
+            180.0f, 190.0f, -100.0f, 1.0f);
 
         private Matrix4x4 worldToCamera = new Matrix4x4();
         private Vector3 clipPlanePosition = new Vector3();
@@ -41,7 +41,7 @@ namespace VirtualCamera
 
             bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
 
-            clipPlanePosition.Z += 10;
+            clipPlanePosition.Z += 100;
 
             //button1.KeyDown += new KeyEventHandler(OnButtonKeyDown);
             button1.PreviewKeyDown += new PreviewKeyDownEventHandler(OnButtonKeyDown);
@@ -153,6 +153,10 @@ namespace VirtualCamera
             }
 
             label5.Text = string.Format("Camera Postion: ({0} | {1} | {2})", cameraToWorld.M41, cameraToWorld.M42, cameraToWorld.M43);
+            label6.Text = string.Format("Camera Rotation:\n({0} | {1} | {2}\n{3} | {4} | {5}\n{6} | {7} | {8} )",
+                cameraToWorld.M11, cameraToWorld.M12, cameraToWorld.M13,
+                cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23,
+                cameraToWorld.M31, cameraToWorld.M32, cameraToWorld.M33);
         }
         private void button1_Click(object sender, EventArgs e)
         {
@@ -305,51 +309,41 @@ namespace VirtualCamera
         /// Z
         private void button13_Click(object sender, EventArgs e)
         {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitZ, 45.0f * DEG2RAD));
-            cameraToWorld = temp * cameraToWorld;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
+            Rotate(Vector3.UnitZ, 10);
         }
 
         private void button12_Click(object sender, EventArgs e)
         {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, 45.0f * DEG2RAD));
-            cameraToWorld = temp * cameraToWorld;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
+            Rotate(-Vector3.UnitZ, 10);
         }
 
         /// X
         private void button8_Click(object sender, EventArgs e)
         {
-
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitX, 10 * DEG2RAD));
-            cameraToWorld = temp * cameraToWorld;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
+            Rotate(Vector3.UnitX, 10);
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitX, 10 * DEG2RAD));
-            cameraToWorld = temp * cameraToWorld;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
+            Rotate(-Vector3.UnitX, 10);
         }
 
         /// Y
         private void button10_Click(object sender, EventArgs e)
         {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitY, 10 * DEG2RAD));
-            cameraToWorld = temp * cameraToWorld;
-            bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
-            Draw();
+            Rotate(Vector3.UnitY, 10);
         }
 
         private void button11_Click(object sender, EventArgs e)
         {
-            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitY, 10 * DEG2RAD));
-            cameraToWorld  = temp * cameraToWorld;
+            Rotate(-Vector3.UnitY, 10);
+        }
+
+
+        private void Rotate(Vector3 axis, float angle)
+        {
+            Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(axis, angle * DEG2RAD));
+            cameraToWorld = temp * cameraToWorld;
             bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
             Draw();
         }
@@ -360,9 +354,9 @@ namespace VirtualCamera
             1.0f, 0.0f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f, 0.0f,
             0.0f, 0.0f, -1.0f, 0.0f,
-            180.0f, 190.0f, -10.0f, 1.0f);
+            180.0f, 190.0f, -100.0f, 1.0f);
             clipPlanePosition = new Vector3();
-            clipPlanePosition.Z += 10;
+            clipPlanePosition.Z += 100;
 
             bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
             Draw();
@@ -415,19 +409,42 @@ namespace VirtualCamera
                 bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
                 Draw();
             }
-            if (e.KeyCode == Keys.Q)
+            else if (e.KeyCode == Keys.Z)
             {
-                Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitZ, 2.0f * DEG2RAD));
-                cameraToWorld = temp * cameraToWorld;
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * -5);
                 bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
                 Draw();
             }
-            else if (e.KeyCode == Keys.E)
+            else if (e.KeyCode == Keys.X)
             {
-                Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitZ, 2.0f * DEG2RAD));
-                cameraToWorld = temp * cameraToWorld;
+                cameraToWorld *= Matrix4x4.CreateTranslation(new Vector3(cameraToWorld.M21, cameraToWorld.M22, cameraToWorld.M23) * 5);
                 bool gib = Matrix4x4.Invert(cameraToWorld, out worldToCamera);
                 Draw();
+            }
+
+            if (e.KeyCode == Keys.Q)
+            {
+                Rotate(-Vector3.UnitZ, 2.0f);
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                Rotate(Vector3.UnitZ, 2.0f);
+            }
+            else if (e.KeyCode == Keys.NumPad4)
+            {
+                Rotate(Vector3.UnitY, 10.0f);
+            }
+            else if (e.KeyCode == Keys.NumPad6)
+            {
+                Rotate(-Vector3.UnitY, 10.0f);
+            }
+            else if (e.KeyCode == Keys.NumPad8)
+            {
+                Rotate(Vector3.UnitX, 2.0f);
+            }
+            else if (e.KeyCode == Keys.NumPad2)
+            {
+                Rotate(-Vector3.UnitX, 2.0f);
             }
 
         }
@@ -455,7 +472,7 @@ namespace VirtualCamera
 
 
                 Console.WriteLine(deltaX);
-                Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitY, deltaX * 0.02f * DEG2RAD));
+                Matrix4x4 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(-Vector3.UnitY, deltaX * 0.02f * DEG2RAD));
                 cameraToWorld = temp * cameraToWorld;
 
                 temp = QuaternionToMatrix4x4(Quaternion.CreateFromAxisAngle(Vector3.UnitX, deltaY * 0.02f * DEG2RAD));
@@ -482,6 +499,11 @@ namespace VirtualCamera
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }
